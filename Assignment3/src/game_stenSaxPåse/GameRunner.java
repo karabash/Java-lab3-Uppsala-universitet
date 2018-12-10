@@ -1,4 +1,4 @@
-package game_stenSaxPåse;
+package game_stenSaxPÃ¥se;
 // import IOException class inside the io package
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -36,14 +36,28 @@ class GameRunner {
 	private static Scanner sc = new Scanner(System.in);
 	private static GameTable gameTable= new GameTable();
 	private String scoreUpdateText;
+	private boolean isUserWillingToPlayAgain;
 	//main method
-	public static void main(String[] args) throws IOException   {
-		gameTable.askName();
+	private boolean isUserWillingToPlayAgain() {
+		return isUserWillingToPlayAgain;
+	}
 
+
+	private void setUserWillingToPlayAgain(boolean isUserWillingToPlayAgain) {
+		this.isUserWillingToPlayAgain = isUserWillingToPlayAgain;
+	}
+
+
+	public static void main(String[] args) throws IOException   {
+		
+		letsPlay();
+	}
+	
+	private static void letsPlay() throws IOException {
+		gameTable.askName();
 		// get input from user(player)
 		//set player name (GameTableInformation has Player)
 		gameTable.setName((sc.nextLine()));
-
 		gameTable.greatUser();
 		// close scanner
 		// local variable
@@ -55,22 +69,15 @@ class GameRunner {
 
 		// creates a ScoreReader object (this is an inner class inside the GameFile.java)
 		GameFile.ScoreReader scoreReader = gameFile.new ScoreReader();
-		// this method gets player name. 
-		// The readScore method takes an argument as String 
-		// game intro table  
+	
 
-		//gameTableInfo.getIntro();
-
-
-
-		// ask to user do you wanna quit the game
 		scoreReader.reader(gameTable.getPlayer1Name());
 
 
 
 
 
-		while( !(contents.isItQuit())  && !(contents.isThereWinner()) & lap>0){
+		while( !(contents.isItQuit())  & !(contents.isThereWinner()) & lap>0 ){
 			//make a choose info
 			gameTable.makeChoose();
 
@@ -102,42 +109,49 @@ class GameRunner {
 			lap--;
 
 		}
+		gameTable.winnerMessage(contents.getScore()[0],contents.getScore()[1]);
+
 		if(lap==0) {
-			gameTable.winnerMessage(contents.getScore()[0],contents.getScore()[1]);
+			scoreReader.reader(gameTable.getPlayer1Name());
+			gameRunner.setUserWillingToPlayAgain(false);
+			System.out.println("Vii du spela om igen? Y/N");
+			String answer =sc.nextLine();
+			playAgain(answer);
+			
+			while(gameRunner.isUserWillingToPlayAgain) {
+				letsPlay();
 
+			}
 		}
-
-		scoreReader.reader(gameTable.getPlayer1Name());
-		System.out.println("Vii du spela om igen? Y/N");
-		if((sc.nextLine().substring(0,1).equalsIgnoreCase("Y") |(sc.nextLine().substring(0,1).equalsIgnoreCase("N") ))){
-			lap=5;
-				gameTable.askName();
-
-				// get input from user(player)
-				//set player name (GameTableInformation has Player)
-				gameTable.setName((sc.nextLine()));
-
-				gameTable.greatUser();
-		}
-		else {
-			gameTable.exitMessage(gameTable.getPlayer1Name());
-			System.exit(0);
-		}
-		//TODO
-		//gameTableInfo.playAgain();
 
 	}
+	
+	private static boolean  playAgain(String answer) {
+		gameRunner.setUserWillingToPlayAgain(answer.substring(0,1).equalsIgnoreCase("Y"));
+			if((gameRunner.isUserWillingToPlayAgain())){
+				lap=5;
+				playerScore=computerScore=0;
+				contents.getScore()[0] = 	contents.getScore()[1]= 0;
 
+				return gameRunner.isUserWillingToPlayAgain;
+		
+			}
+			else {
+				gameTable.exitMessage(gameTable.getPlayer1Name());
+				
+				System.exit(0);
+			}
+			return gameRunner.isUserWillingToPlayAgain();
 
-	// this method check user input equals with sten, sax eller påse
+		}
+
 	private final boolean checkUserInputEqualsWithContents() {
 		return  contents.getUserInput().equalsIgnoreCase(Contents.ALTERNATIVES[0]) | 
 				contents.getUserInput().equalsIgnoreCase(Contents.ALTERNATIVES[1]) |
 				contents.getUserInput().equalsIgnoreCase(Contents.ALTERNATIVES[2]);
 
 	}
-	// this method checks is user Input is same as q or Q (asc2 q is 113 and Q is 81 
-	//	that's why i did subtraction) 
+ 
 
 
 	private final void play() throws IOException {
@@ -147,12 +161,12 @@ class GameRunner {
 
 
 		if( (pcIndex == 0 & contents.getUserInput().equalsIgnoreCase("sax") |
-				(pcIndex == 1 & contents.getUserInput().equalsIgnoreCase("påse") |
+				(pcIndex == 1 & contents.getUserInput().equalsIgnoreCase("pÃ¥se") |
 				(pcIndex == 2 & contents.getUserInput().equalsIgnoreCase("sten"))))){
 
 			int coputerScore = ++contents.getScore()[0];
 			// Score interface
-			text =  computer.getName() + " score är "+ coputerScore;
+			text =  computer.getName() + " score Ã¤r "+ coputerScore;
 
 			gameTable.methodPrinter(Contents.ALTERNATIVES[pcIndex], Contents.METHODS[pcIndex], contents.getUserInput());
 
@@ -165,13 +179,13 @@ class GameRunner {
 
 		else if ((pcIndex == 0 & contents.getUserInput().equalsIgnoreCase("sten") |
 				(pcIndex == 1 & contents.getUserInput().equalsIgnoreCase("sax") |
-				(pcIndex == 2 & contents.getUserInput().equalsIgnoreCase("påse"))))) {	
-			System.out.println("Det är Jämnt!");
-			scoreWriter.writeScore("Det är Jämnt!\n");
+				(pcIndex == 2 & contents.getUserInput().equalsIgnoreCase("pÃ¥se"))))) {	
+			System.out.println("Det Ã¤r JÃ¤mnt!");
+			scoreWriter.writeScore("Det Ã¤r JÃ¤mnt!\n");
 
 		}
 
-		else if (pcIndex == 0 & contents.getUserInput().equalsIgnoreCase("påse") |
+		else if (pcIndex == 0 & contents.getUserInput().equalsIgnoreCase("pÃ¥se") |
 				(pcIndex == 1 & contents.getUserInput().equalsIgnoreCase("sten") |
 				(pcIndex == 2 & contents.getUserInput().equalsIgnoreCase("sax")))){
 			int userIndex = 0;
@@ -181,22 +195,24 @@ class GameRunner {
 				}
 			}
 			contents.getScore()[1] = ++playerScore;
-			text = gameTable.getPlayer1Name()  + " score är "+ contents.getScore()[1];
+			text = gameTable.getPlayer1Name()  + " score Ã¤r "+ playerScore;
 
 			gameTable.methodPrinter(Contents.ALTERNATIVES[userIndex], Contents.METHODS[userIndex], Contents.ALTERNATIVES[pcIndex]);
 			scoreWriter.writeScore(text+"\n");
 
 
 		}
-		
+
 		scoreUpdateText =	gameTable.getScore(contents.getScore()[0], contents.getScore()[1], gameTable.getPlayer1Name() ,computer.getName());
 		System.out.print(scoreUpdateText);
-
+		
+		
 	}
 
+	
+
+
 }
-
-
 
 
 
