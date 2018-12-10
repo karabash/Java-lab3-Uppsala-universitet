@@ -1,4 +1,4 @@
-package game_stenSaxPåse;
+package game_stenSaxPÃ¥se;
 import Table.Exiter;
 import Table.PlayerGreeting;
 import Table.Score;
@@ -44,25 +44,25 @@ public class GameTable implements Exiter, Message{
 	 void greatUser() {
 		PlayerGreeting g = p -> getPlayer1Name();
 		
-			System.out.print("** HEJ OCH VÄLKOMMEN "+ g.greatingUser((getPlayer1Name())) + " TILL MIN SPEL STEN-SAX-PÅSE ** \nSpelet där sten krossar sax,"
-					+ " sax klipper påse och påse fångar sten. Bäst av fem vinner.\n");
+			System.out.print("** HEJ OCH VÃ„LKOMMEN "+ g.greatingUser((getPlayer1Name())) + " TILL MIN SPEL STEN-SAX-PÃ…SE ** \nSpelet dÃ¤r sten krossar sax,"
+					+ " sax klipper pÃ¥se och pÃ¥se fÃ¥ngar sten. BÃ¤st av fem vinner.\n");
 			this.giveGameExitInfo(getPlayer1Name());
 		}
 	
 	
 	 String getScore(int computerScore, int playerScore, String playerName, String computerName) {
-	final	String poäng = "'s poäng är ";
+	final	String poÃ¤ng = "'s poÃ¤ng Ã¤r ";
 	
 
-	Score	sc = (cS,pS, pN) ->  {return  ("\nGame Score: ").concat(playerName + poäng + playerScore +". "
-			+computerName +poäng+ computerScore+"\n");};
+	Score	sc = (cS,pS, pN) ->  {return  ("\nGame Score: ").concat(playerName + poÃ¤ng + playerScore +". "
+			+computerName +poÃ¤ng+ computerScore+"\n");};
 		sc.getScore(computerScore, playerScore, playerName).length();
 		return sc.getScore(computerScore, playerScore, playerName);
 	      
 	 		 	 
 	}
 	 void giveGameExitInfo(String playerName) {
-		System.out.println( "Förresten vill du  avsluta programmet "+ playerName +", kan du göra det genom att skriva Q.");
+		System.out.println( "FÃ¶rresten vill du  avsluta programmet "+ playerName +", kan du gÃ¶ra det genom att skriva Q.");
 		}
 
 	@Override
@@ -78,7 +78,7 @@ public class GameTable implements Exiter, Message{
 
 	@Override
 	public void invalidValueMessage() {
-		System.out.println("Ogiltigt värde. Giltiga värden är sten, sax eller påse.\n");
+		System.out.println("Ogiltigt vÃ¤rde. Giltiga vÃ¤rden Ã¤r sten, sax eller pÃ¥se.\n");
 		
 	}
 
@@ -89,7 +89,7 @@ public class GameTable implements Exiter, Message{
 			else if(pcScore>playerScore)
 				System.out.println("winner is Datorn " + pcScore);		
 			else
-				System.out.println("Tie " + pcScore);		
+				System.out.println("Ha Ha Ha Ingen vinner " );		
 
 	}
 
@@ -105,11 +105,11 @@ public class GameTable implements Exiter, Message{
 	}                       
 
 	 void printUserChoice(String userInput) {
-		System.out.println("Ditt val är "+ userInput);
+		System.out.println("Ditt val Ã¤r "+ userInput);
 	}
 
 	 void makeChoose() {
-		System.out.println(player1.getName() + " gör ditt val (sten, sax eller påse): ");
+		System.out.println(player1.getName() + " gÃ¶r ditt val (sten, sax eller pÃ¥se): ");
 	}
 	
 }
