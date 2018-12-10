@@ -1,4 +1,4 @@
-package game_stenSaxPåse;
+package game_stenSaxPÃ¥se;
 import java.util.List;
 import java.io.*;
 import java.nio.charset.Charset;
@@ -28,7 +28,6 @@ public class GameFile {
 
 	// default inner class (only package access)
 	class ScoreReader{
-		private StringBuilder sb = new StringBuilder();
 		private int playerTotalScore=0;
 		private int computerScore=0;
 		private int tie = 0;
@@ -59,58 +58,38 @@ public class GameFile {
 		}
 
 		void reader(String userName) {
+			boolean isItFirstLoading = true;
+			boolean isItLastreading = true;
 
 			final Path filePath = Paths.get("C:/eclipse/score.txt");
 			final Charset charset = Charset.forName("ISO-8859-1");
 			try {
 				List<String> lines = Files.readAllLines(filePath, charset);
-				if(lines.isEmpty()) {
-					System.out.println(this.messageOfFileReader(userName));
-
-				}
-				else {
-					boolean isItFirstLoading = true;
-					boolean isItLastreading = false;
-
 				for(String line : lines) {
-					
-					
-					if(line.contains("Det är Jämnt!")) {
+
+					if(line.contains("Det Ã¤r JÃ¤mnt!")) {
 						this.setTie(++tie);
 					}
-					else  if(line.contains("Datorn score är 1") 
-							| line.contains("Datorn score är 2") | line.contains("Datorn score är 3") 
-							|  line.contains("Datorn score är 4" ) | line.contains("Datorn score är 5") )  {
+					else  if(line.contains("Datorn score Ã¤r 1") 
+							| line.contains("Datorn score Ã¤r 2") | line.contains("Datorn score Ã¤r 3") 
+							|  line.contains("Datorn score Ã¤r 4" ) | line.contains("Datorn score Ã¤r 5") )  {
 						this.setComputerScore(++computerScore);					}
 					else {
-						if(!line.contains("Datorn score är 0"))
+						if(!line.contains("Datorn score Ã¤r 0"))
 							this.setPlayerTotalScore(++playerTotalScore);		
 					}
-					
+
 				}
-				if(isItFirstLoading) {
-					System.out.println(this.messageOfFileReader(userName).substring(76));
-					isItFirstLoading =false;
-					tie=playerTotalScore=computerScore=0;
-					}
-				else if(isItLastreading) {
-					System.out.println(this.messageOfFileReader(userName).substring(76));
-					isItFirstLoading =false;
-					}
-				isItFirstLoading= true;
-				}
+				System.out.println("Total stÃ¤llning: "+ userName +" "+ playerTotalScore +
+						" Datorn score "+ computerScore + " Tie " + tie);
+				computerScore=0;
+				playerTotalScore=0;
+				tie=0;
 			}catch (IOException e) {
 				System.out.println("Score files on process! Play another time");
 				System.exit(0);
 			}
 
-		}
-		StringBuilder messageOfFileReader(String name) {
-			this.sb.append("\nDu är första spelare som ska spela med mig. Det finns ingen fusk!\nSå kolla Total ställning: ");
-			sb.append(name).append("(").append(this.getPlayerTotalScore()).append(") VS Datorn (");
-			sb.append(this.getComputerScore()).append(") and Tie(").append(this.getTie()).append(")");
-			//sb.append("\nSom du ser vi är jämna just nu....\n");
-			return sb;
 		}
 
 	}
