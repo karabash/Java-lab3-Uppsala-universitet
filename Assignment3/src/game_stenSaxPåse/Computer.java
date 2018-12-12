@@ -6,14 +6,14 @@ class Computer  extends Player{
 
 
 
-	// static block initialize directly playerIsOc and Random
+	// static block initializer directly playerIs and Random
 
 	static {
 		playerIsPc = new Computer();
 	}
 
 	//Constructor
-	Computer(){
+	private Computer(){
 		//calls the super class
 		super();
 		// setting a name to computer (player name is computer)
