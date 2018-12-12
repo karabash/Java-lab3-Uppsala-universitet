@@ -7,7 +7,7 @@ class GameRunner {
 	//All of them creates one object and they are class field can't be access out of class
 	private static Contents contents = new Contents();
 	private static GameRunner gameRunner = new GameRunner();
-	private static Computer computer = new Computer();
+	private static Computer computer = Computer.getInstance();
 	private static int lap = 5;
 	private static GameFile.ScoreWritter scoreWriter; 
 	private static Scanner sc = new Scanner(System.in);
