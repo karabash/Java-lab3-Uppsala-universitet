@@ -1,6 +1,5 @@
 package game_stenSaxPåse;
 import java.util.Random;
-// singleton class creates only one object
 class Computer  extends Player{
 	private static Computer playerIsPc;
 	private Random random = new Random();
